@@ -1,0 +1,37 @@
+components:
+  schemas:
+    RealworldV1HelloReply:
+      properties:
+        message:
+          type: string
+      type: object
+info:
+  description: realworld.v1
+  title: realworld.v1
+  version: "1"
+openapi: 3.0.0
+paths:
+  /helloworld/{name}:
+    description: Sends a greeting
+    get:
+      description: Sends a greeting
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealworldV1HelloReply'
+          description: ok
+      summary: Sends a greeting
+      tags:
+      - realworld.v1.RealWorld
+    summary: SayHello
+tags:
+- description: The greeting service definition.
+  name: realworld.v1.RealWorld
+
