@@ -36,6 +36,9 @@ components:
           type: string
       type: object
     RealworldV1LoginRequest:
+      properties:
+        user:
+          $ref: '#/components/schemas/RealworldV1LoginRequestUser'
       type: object
     RealworldV1MultipleArticlesReply:
       properties:
@@ -58,6 +61,11 @@ components:
       properties:
         profile:
           $ref: '#/components/schemas/RealworldV1ProfileReplyProfile'
+      type: object
+    RealworldV1RegisterRequest:
+      properties:
+        user:
+          $ref: '#/components/schemas/RealworldV1RegisterRequestUser'
       type: object
     RealworldV1SingleArticleReply:
       properties:
@@ -205,7 +213,7 @@ paths:
       tags:
       - realworld.v1.RealWorld
     summary: FeedArticles
-  /api/profiles/:username:
+  /api/profiles/{username}:
     get:
       parameters:
       - in: query
@@ -222,7 +230,7 @@ paths:
       tags:
       - realworld.v1.RealWorld
     summary: GetProfile
-  /api/profiles/:username/follow:
+  /api/profiles/{username}/follow:
     delete:
       responses:
         "200":
@@ -270,7 +278,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RealworldV1LoginRequest'
+              $ref: '#/components/schemas/RealworldV1RegisterRequest'
         required: true
       responses:
         "200":
@@ -281,7 +289,7 @@ paths:
           description: ok
       tags:
       - realworld.v1.RealWorld
-    summary: RegisterRequest
+    summary: Register
   /api/users/login:
     post:
       requestBody:

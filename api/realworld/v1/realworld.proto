@@ -8,47 +8,49 @@ option go_package = "kratos-realworld/api/realworld/v1;v1";
 
 // The greeting service definition.
 service RealWorld {
-  rpc Login(LoginRequest) returns (UserReply){
+  rpc Login(LoginRequest) returns (UserReply) {
     option (google.api.http) = {
       post: "/api/users/login",
       body: "*",
     };
   }
-  rpc RegisterRequest(LoginRequest) returns (UserReply){
+
+  rpc Register(RegisterRequest) returns (UserReply) {
     option (google.api.http) = {
       post: "/api/users",
       body: "*",
     };
   }
-  rpc GetCurrentUser(GetCurrentUserRequest) returns (UserReply){
+
+  rpc GetCurrentUser(GetCurrentUserRequest) returns (UserReply) {
     option (google.api.http) = {
       get: "/api/user",
     };
   }
 
-  rpc UpdateUser(UpdateUserRequest) returns (UserReply){
+  rpc UpdateUser(UpdateUserRequest) returns (UserReply) {
     option (google.api.http) = {
       put: "/api/user",
       body: "*",
     };
   }
 
-  rpc GetProfile(GetProfileRequest) returns (ProfileReply){
+  rpc GetProfile(GetProfileRequest) returns (ProfileReply) {
     option (google.api.http) = {
-      get: "/api/profiles/:username",
+      get: "/api/profiles/{username}",
     };
   }
 
-  rpc FollowUser(FollowUserRequest) returns (ProfileReply){
+  rpc FollowUser(FollowUserRequest) returns (ProfileReply) {
     option (google.api.http) = {
-      post: "/api/profiles/:username/follow",
+      post: "/api/profiles/{username}/follow",
       body: "*",
     };
   }
 
-  rpc UnfollowUser(UnfollowUserRequest) returns (ProfileReply){
+  rpc UnfollowUser(UnfollowUserRequest) returns (ProfileReply) {
     option (google.api.http) = {
-      delete: "/api/profiles/:username/follow",
+      delete: "/api/profiles/{username}/follow",
     };
   }
 
@@ -130,6 +132,7 @@ service RealWorld {
       get: "/api/tags",
     };
   }
+
 }
 
 message GetTagsRequest {}
@@ -211,21 +214,25 @@ message UnfollowUserRequest {
 message FollowUserRequest {
   string username = 1;
 }
-message GetCurrentUserRequest{}
+
+message GetProfileRequest {
+  string username = 1;
+}
+
+message GetCurrentUserRequest {}
+
 
 message UpdateUserRequest {
+
     message User {
       string email = 1;
       string token = 2;
       string username = 3;
       string bio = 4;
       string image = 5;
-  }
-  User user = 1;
-}
+    }
 
-message GetProfileRequest{
-  string username = 1;
+    User user = 1;
 }
 
 message UserReply {
@@ -250,12 +257,14 @@ message ProfileReply {
 }
 
 message SingleArticleReply {
+
   message Author {
       string username = 1;
       string bio = 2;
       string image = 3;
       bool following = 4;
   }
+
   message Article {
       string slug = 1;
       string title = 2;
@@ -269,36 +278,37 @@ message SingleArticleReply {
       Author author = 10;
   }
 
-Article article = 1;
+  Article article = 1;
 }
 
-
 message MultipleArticlesReply {
-    message Author {
-        string username = 1;
-        string bio = 2;
-        string image = 3;
-        bool following = 4;
-    }
 
-    message Articles {
-        string slug = 1;
-        string title = 2;
-        string description = 3;
-        string body = 4;
-        repeated string tagList = 5;
-        string createdAt = 6;
-        string updatedAt = 7;
-        bool favorited = 8;
-        uint32 favoritesCount = 9;
-        Author author = 10;
-    }
+  message Author {
+      string username = 1;
+      string bio = 2;
+      string image = 3;
+      bool following = 4;
+  }
 
-    repeated Articles articles = 1;
-    uint32 articlesCount = 2;
+  message Articles {
+      string slug = 1;
+      string title = 2;
+      string description = 3;
+      string body = 4;
+      repeated string tagList = 5;
+      string createdAt = 6;
+      string updatedAt = 7;
+      bool favorited = 8;
+      uint32 favoritesCount = 9;
+      Author author = 10;
+  }
+
+  repeated Articles articles = 1;
+  uint32 articlesCount = 2;
 }
 
 message SingleCommentReply {
+
   message Author {
       string username = 1;
       string bio = 2;
@@ -317,23 +327,25 @@ message SingleCommentReply {
   Comment comment = 1;
 }
 
+
 message MultipleCommentsReply {
 
-  message Author {
-      string username = 1;
-      string bio = 2;
-      string image = 3;
-      bool following = 4;
-  }
+    message Author {
+        string username = 1;
+        string bio = 2;
+        string image = 3;
+        bool following = 4;
+    }
 
-  message Comments {
-      uint32 id = 1;
-      string createdAt = 2;
-      string updatedAt = 3;
-      string body = 4;
-      Author author = 5;
-  }
-  repeated Comments comments = 1;
+    message Comments {
+        uint32 id = 1;
+        string createdAt = 2;
+        string updatedAt = 3;
+        string body = 4;
+        Author author = 5;
+    }
+
+    repeated Comments comments = 1;
 }
 
 message TagListReply {
@@ -341,17 +353,20 @@ message TagListReply {
 }
 
 message LoginRequest {
-  message User{
+  message User {
     string email = 1;
-    string password = 2;
+    string password = 2; 
   }
+  User user = 1;
 }
 
+
+
 message RegisterRequest {
-  message User{
+  message User {
     string username = 1;
     string email = 2;
-    string password = 3;
+    string password = 3; 
   }
   User user = 1;
 }
